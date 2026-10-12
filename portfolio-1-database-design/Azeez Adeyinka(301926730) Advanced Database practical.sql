@@ -17,3 +17,20 @@ INSERT INTO customers (full_name, email, phone_number)
 SELECT * 
 FROM customers;
 
+CREATE TABLE DRIVERS (
+    driver_id      INT AUTO_INCREMENT PRIMARY KEY,
+    full_name      VARCHAR(50) NOT NULL,
+    phone_number   VARCHAR(20) NOT NULL UNIQUE,
+    license_number VARCHAR(30) NOT NULL UNIQUE,
+    status         ENUM('available', 'on_trip', 'offline') NOT NULL DEFAULT 'offline',
+    rating         DECIMAL(2,1) NULL,
+    joined_at      DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT chk_driver_rating CHECK (rating IS NULL OR rating BETWEEN 1.0 AND 5.0)
+);
+
+INSERT INTO drivers (full_name, phone_number, license_number)
+   VALUES ('Test Driver 1', '08099990001', 'TEST-LIC-001');
+   
+SELECT *
+FROM customers, drivers
+
