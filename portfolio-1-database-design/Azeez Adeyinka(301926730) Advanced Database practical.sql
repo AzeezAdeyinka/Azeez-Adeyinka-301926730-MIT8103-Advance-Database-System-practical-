@@ -32,5 +32,22 @@ INSERT INTO drivers (full_name, phone_number, license_number)
    VALUES ('Test Driver 1', '08099990001', 'TEST-LIC-001');
    
 SELECT *
-FROM customers, drivers
+FROM customers, drivers;
+
+
+CREATE TABLE vehicles (
+    vehicle_id   INT AUTO_INCREMENT PRIMARY KEY,
+    driver_id    INT NOT NULL,
+    plate_number VARCHAR(15) NOT NULL UNIQUE,
+    vehicle_type ENUM('bike', 'car', 'van') NOT NULL,
+    capacity_kg  DECIMAL(7,2) NOT NULL,
+    CONSTRAINT foreignKey_vehicle_driver FOREIGN KEY (driver_id) REFERENCES drivers(driver_id),
+    CONSTRAINT chk_capacity CHECK (capacity_kg > 0)
+);
+
+INSERT INTO vehicles (driver_id, plate_number, vehicle_type, capacity_kg)
+	VALUES (1, 'TEST-001-AA', 'car', 300);
+    
+SELECT *
+FROM customers, drivers, vehicles;
 
