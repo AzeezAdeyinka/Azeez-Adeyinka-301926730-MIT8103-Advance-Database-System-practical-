@@ -119,3 +119,21 @@ INSERT INTO deliveries (trip_id, parcel_description, weight_kg, recipient_name, 
    
 SELECT *
 FROM deliveries;
+
+
+CREATE TABLE trip_status_history (
+    history_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    trip_id    INT NOT NULL,
+    status     ENUM('requested', 'accepted', 'in_progress', 'completed', 'cancelled') NOT NULL,
+    changed_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    note       VARCHAR(200) NULL,
+    CONSTRAINT foreignKey_history_trip FOREIGN KEY (trip_id) REFERENCES trips(trip_id) ON DELETE CASCADE
+);
+
+INSERT INTO trip_status_history (trip_id, status) 
+	VALUES (1, 'requested');
+INSERT INTO trip_status_history (trip_id, status, note) 
+	VALUES (1, 'accepted', 'Driver accepted');
+
+SELECT *
+FROM trip_status_history;
