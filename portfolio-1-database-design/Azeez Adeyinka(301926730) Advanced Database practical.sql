@@ -51,3 +51,20 @@ INSERT INTO vehicles (driver_id, plate_number, vehicle_type, capacity_kg)
 SELECT *
 FROM customers, drivers, vehicles;
 
+
+CREATE TABLE locations (
+    location_id INT AUTO_INCREMENT PRIMARY KEY,
+    address     VARCHAR(150) NOT NULL,
+    area        VARCHAR(50) NOT NULL,
+    latitude    DECIMAL(9,6) NOT NULL,
+    longitude   DECIMAL(9,6) NOT NULL,
+    CONSTRAINT chk_latitude  CHECK (latitude  BETWEEN -90 AND 90),
+    CONSTRAINT chk_longitude CHECK (longitude BETWEEN -180 AND 180)
+);
+
+INSERT INTO locations (address, area, latitude, longitude)
+   VALUES ('Test Street, NO 345 industrial Street', 'Ilupeju', 6.6018, 3.3515);
+   
+SELECT *
+FROM customers, drivers, vehicles, locations;
+
