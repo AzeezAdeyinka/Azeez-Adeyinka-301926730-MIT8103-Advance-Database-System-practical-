@@ -68,3 +68,35 @@ INSERT INTO locations (address, area, latitude, longitude)
 SELECT *
 FROM customers, drivers, vehicles, locations;
 
+
+CREATE TABLE trips (
+    trip_id             INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id         INT NOT NULL,
+    driver_id           INT NULL,
+    vehicle_id          INT NULL,
+    trip_type           ENUM('ride', 'delivery') NOT NULL,
+    pickup_location_id  INT NOT NULL,
+    dropoff_location_id INT NOT NULL,
+    status              ENUM('requested', 'accepted', 'in_progress', 'completed', 'cancelled')
+                        NOT NULL DEFAULT 'requested',
+    requested_at        DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    started_at          DATETIME NULL,
+    completed_at        DATETIME NULL,
+    distance_km         DECIMAL(6,2) NULL,
+    fare_amount         DECIMAL(10,2) NULL,
+    CONSTRAINT foreignKey_trip_customer FOREIGN KEY (customer_id)         REFERENCES customers(customer_id),
+    CONSTRAINT foreignKey_trip_driver   FOREIGN KEY (driver_id)           REFERENCES drivers(driver_id),
+    CONSTRAINT foreignKey_trip_vehicle  FOREIGN KEY (vehicle_id)          REFERENCES vehicles(vehicle_id),
+    CONSTRAINT foreignKey_trip_pickup   FOREIGN KEY (pickup_location_id)  REFERENCES locations(location_id),
+    CONSTRAINT foreignKey_trip_dropoff  FOREIGN KEY (dropoff_location_id) REFERENCES locations(location_id),
+    CONSTRAINT check_trip_locations CHECK (pickup_location_id <> dropoff_location_id),
+    CONSTRAINT check_trip_fare      CHECK (fare_amount IS NULL OR fare_amount >= 0)
+);
+
+INSERT INTO trips (customer_id, trip_type, pickup_location_id, dropoff_location_id)
+   VALUES (1, 'ride', 1, 2);
+   
+
+SELECT *
+FROM trips;
+
