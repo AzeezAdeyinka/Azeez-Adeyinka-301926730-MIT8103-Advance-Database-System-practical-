@@ -137,3 +137,21 @@ INSERT INTO trip_status_history (trip_id, status, note)
 
 SELECT *
 FROM trip_status_history;
+
+
+CREATE TABLE payments (
+    payment_id INT AUTO_INCREMENT PRIMARY KEY,
+    trip_id    INT NOT NULL,
+    amount     DECIMAL(10,2) NOT NULL,
+    method     ENUM('cash', 'card', 'transfer', 'wallet') NOT NULL,
+    status     ENUM('pending', 'successful', 'failed', 'refunded') NOT NULL DEFAULT 'pending',
+    paid_at    DATETIME NULL,
+    CONSTRAINT foreignKey_payment_trip FOREIGN KEY (trip_id) REFERENCES trips(trip_id),
+    CONSTRAINT check_payment_amount CHECK (amount > 0)
+);
+
+INSERT INTO payments (trip_id, amount, method)
+   VALUES (1, 4500.00, 'card');
+   
+SELECT *
+FROM payments;
