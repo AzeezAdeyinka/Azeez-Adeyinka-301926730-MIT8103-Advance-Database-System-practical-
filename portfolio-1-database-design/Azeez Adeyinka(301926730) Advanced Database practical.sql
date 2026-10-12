@@ -100,3 +100,22 @@ INSERT INTO trips (customer_id, trip_type, pickup_location_id, dropoff_location_
 SELECT *
 FROM trips;
 
+
+CREATE TABLE deliveries (
+    delivery_id        INT AUTO_INCREMENT PRIMARY KEY,
+    trip_id            INT NOT NULL UNIQUE,
+    parcel_description VARCHAR(150) NOT NULL,
+    weight_kg          DECIMAL(6,2) NOT NULL,
+    recipient_name     VARCHAR(50) NOT NULL,
+    recipient_phone    VARCHAR(20) NOT NULL,
+    delivery_status    ENUM('pending', 'picked_up', 'in_transit', 'delivered', 'failed')
+                       NOT NULL DEFAULT 'pending',
+    CONSTRAINT foreignKey_delivery_trip FOREIGN KEY (trip_id) REFERENCES trips(trip_id) ON DELETE CASCADE,
+    CONSTRAINT check_weight CHECK (weight_kg > 0)
+);
+
+INSERT INTO deliveries (trip_id, parcel_description, weight_kg, recipient_name, recipient_phone)
+   VALUES (1, 'Test parcel', 2.5, 'Test Recipient', '08099990002');
+   
+SELECT *
+FROM deliveries;
