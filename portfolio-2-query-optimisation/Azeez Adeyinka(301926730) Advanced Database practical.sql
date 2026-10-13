@@ -219,4 +219,44 @@ INSERT INTO trips (trip_id, customer_id, driver_id, vehicle_id, trip_type, picku
 	(40, 1, 12, 12, 'delivery', 1, 6, 'in_progress', '2026-10-13 10:40:00', '2026-10-13 10:52:00', NULL, NULL, NULL);
    
 SELECT *
-FROM trips;v
+FROM trips;
+
+
+CREATE TABLE deliveries (
+    delivery_id        INT AUTO_INCREMENT PRIMARY KEY,
+    trip_id            INT NOT NULL UNIQUE,
+    parcel_description VARCHAR(150) NOT NULL,
+    weight_kg          DECIMAL(6,2) NOT NULL,
+    recipient_name     VARCHAR(50) NOT NULL,
+    recipient_phone    VARCHAR(20) NOT NULL,
+    delivery_status    ENUM('pending', 'picked_up', 'in_transit', 'delivered', 'failed')
+                       NOT NULL DEFAULT 'pending',
+    CONSTRAINT foreignKey_delivery_trip FOREIGN KEY (trip_id) REFERENCES trips(trip_id) ON DELETE CASCADE,
+    CONSTRAINT check_weight CHECK (weight_kg > 0)
+);
+
+INSERT INTO deliveries (trip_id, parcel_description, weight_kg, recipient_name, recipient_phone, delivery_status) 
+	VALUES
+	(2, 'Laptop bag', 13.59, 'Femi Okoro', '08033330002', 'delivered'),
+	(4, 'Birthday cake box', 4.02, 'Tola Fashola', '08033330004', 'delivered'),
+	(6, 'Shoe box', 5.39, 'Femi Danjuma', '08033330006', 'delivered'),
+	(8, 'Grocery bag', 15.65, 'Tola Nwosu', '08033330008', 'delivered'),
+	(10, 'Documents envelope', 63.17, 'Femi Adeoye', '08033330010', 'failed'),
+	(12, 'Laptop bag', 107.68, 'Tola Obi', '08033330012', 'delivered'),
+	(14, 'Birthday cake box', 84.10, 'Femi Ajayi', '08033330014', 'delivered'),
+	(16, 'Shoe box', 5.26, 'Tola Eze', '08033330016', 'delivered'),
+	(18, 'Grocery bag', 83.81, 'Femi Yusuf', '08033330018', 'delivered'),
+	(20, 'Documents envelope', 145.10, 'Tola Bakare', '08033330020', 'failed'),
+	(22, 'Laptop bag', 2.89, 'Femi Okoro', '08033330022', 'delivered'),
+	(24, 'Birthday cake box', 12.13, 'Tola Fashola', '08033330024', 'delivered'),
+	(26, 'Shoe box', 17.26, 'Femi Danjuma', '08033330026', 'delivered'),
+	(28, 'Grocery bag', 9.29, 'Tola Nwosu', '08033330028', 'delivered'),
+	(30, 'Documents envelope', 15.06, 'Femi Adeoye', '08033330030', 'delivered'),
+	(32, 'Laptop bag', 142.33, 'Tola Obi', '08033330032', 'delivered'),
+	(34, 'Birthday cake box', 68.98, 'Femi Ajayi', '08033330034', 'delivered'),
+	(36, 'Shoe box', 139.66, 'Tola Eze', '08033330036', 'pending'),
+	(38, 'Grocery bag', 8.86, 'Femi Yusuf', '08033330038', 'pending'),
+	(40, 'Documents envelope', 14.20, 'Tola Bakare', '08033330040', 'in_transit');
+   
+SELECT *
+FROM deliveries;
