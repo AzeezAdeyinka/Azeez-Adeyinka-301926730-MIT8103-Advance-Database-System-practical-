@@ -509,3 +509,10 @@ JOIN trips ON trips.driver_id = drivers.driver_id
 WHERE trips.status = 'completed'
 GROUP BY drivers.driver_id, drivers.full_name
 ORDER BY total_earnings DESC;
+
+-- QESTION 6: completed trips with the customer's name
+SELECT trips.trip_id, customers.full_name, trips.trip_type, trips.fare_amount, trips.completed_at
+FROM trips
+JOIN customers ON trips.customer_id = customers.customer_id
+WHERE trips.status = 'completed'
+ORDER BY trips.completed_at;
