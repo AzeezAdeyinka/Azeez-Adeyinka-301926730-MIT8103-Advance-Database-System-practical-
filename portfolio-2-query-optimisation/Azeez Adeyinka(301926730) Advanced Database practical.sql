@@ -485,3 +485,8 @@ USE insightmove_db;
 -- QUESTION 1: all customers
 SELECT * 
 FROM customers;
+
+-- QUESTION 2: all completed trips
+SELECT * 
+FROM trips
+WHERE status = 'completed';
