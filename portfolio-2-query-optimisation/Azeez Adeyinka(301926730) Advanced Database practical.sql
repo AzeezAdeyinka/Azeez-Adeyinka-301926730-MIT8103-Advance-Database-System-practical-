@@ -476,3 +476,12 @@ INSERT INTO payments (trip_id, amount, method, status, paid_at)
    
 SELECT *
 FROM payments;
+
+
+
+-- QUERIES TO ANSWER IMPORTANT QUESTIONS
+USE insightmove_db;
+
+-- QUESTION 1: all customers
+SELECT * 
+FROM customers;
