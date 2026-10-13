@@ -516,3 +516,13 @@ FROM trips
 JOIN customers ON trips.customer_id = customers.customer_id
 WHERE trips.status = 'completed'
 ORDER BY trips.completed_at;
+
+
+-- QUESTION 7: customers with more than one completed trip
+SELECT customers.customer_id, customers.full_name, COUNT(*) AS completed_trips
+FROM customers
+JOIN trips ON trips.customer_id = customers.customer_id
+WHERE trips.status = 'completed'
+GROUP BY customers.customer_id, customers.full_name
+HAVING COUNT(*) > 1
+ORDER BY completed_trips DESC;
