@@ -10,7 +10,7 @@
 
 ## 2. ER Diagram
 
-![ER diagram](portfolio-1-database-design/ER-Diagram.png)
+![ER diagram](ER-Diagram.png)
 
 **Relationships**
 
