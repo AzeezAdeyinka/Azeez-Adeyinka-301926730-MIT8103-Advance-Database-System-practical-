@@ -420,3 +420,59 @@ INSERT INTO trip_status_history (trip_id, status, changed_at, note)
 
 SELECT *
 FROM trip_status_history;
+
+
+CREATE TABLE payments (
+    payment_id INT AUTO_INCREMENT PRIMARY KEY,
+    trip_id    INT NOT NULL,
+    amount     DECIMAL(10,2) NOT NULL,
+    method     ENUM('cash', 'card', 'transfer', 'wallet') NOT NULL,
+    status     ENUM('pending', 'successful', 'failed', 'refunded') NOT NULL DEFAULT 'pending',
+    paid_at    DATETIME NULL,
+    CONSTRAINT foreignKey_payment_trip FOREIGN KEY (trip_id) REFERENCES trips(trip_id),
+    CONSTRAINT check_payment_amount CHECK (amount > 0)
+);
+
+INSERT INTO payments (trip_id, amount, method, status, paid_at) 
+	VALUES
+	(1, 1450.00, 'card', 'successful', '2026-09-01 11:56:00'),
+	(2, 4000.00, 'wallet', 'successful', '2026-09-02 17:40:00'),
+	(3, 950.00, 'transfer', 'successful', '2026-09-03 07:03:00'),
+	(4, 3250.00, 'transfer', 'successful', '2026-09-04 12:56:00'),
+	(5, 5300.00, 'cash', 'refunded', '2026-09-05 17:44:00'),
+	(6, 1600.00, 'card', 'successful', '2026-09-06 06:59:00'),
+	(7, 2300.00, 'card', 'failed', NULL),
+	(7, 2300.00, 'cash', 'successful', '2026-09-07 12:24:00'),
+	(8, 1650.00, 'wallet', 'successful', '2026-09-08 17:26:00'),
+	(9, 4500.00, 'wallet', 'successful', '2026-09-09 08:30:00'),
+	(11, 5050.00, 'card', 'successful', '2026-09-11 17:59:00'),
+	(12, 4900.00, 'wallet', 'successful', '2026-09-12 08:08:00'),
+	(13, 1550.00, 'wallet', 'successful', '2026-09-13 12:28:00'),
+	(14, 4400.00, 'card', 'failed', NULL),
+	(14, 4400.00, 'cash', 'successful', '2026-09-14 17:27:00'),
+	(15, 4500.00, 'wallet', 'successful', '2026-09-15 07:45:00'),
+	(16, 2150.00, 'wallet', 'successful', '2026-09-16 12:13:00'),
+	(17, 5050.00, 'transfer', 'successful', '2026-09-17 18:17:00'),
+	(18, 3300.00, 'cash', 'successful', '2026-09-18 07:59:00'),
+	(19, 2350.00, 'transfer', 'successful', '2026-09-19 11:56:00'),
+	(21, 4700.00, 'card', 'failed', NULL),
+	(21, 4700.00, 'cash', 'successful', '2026-09-21 08:05:00'),
+	(22, 2900.00, 'cash', 'successful', '2026-09-22 12:38:00'),
+	(23, 900.00, 'card', 'successful', '2026-09-23 17:32:00'),
+	(24, 1750.00, 'transfer', 'successful', '2026-09-24 06:45:00'),
+	(25, 950.00, 'card', 'successful', '2026-09-25 12:01:00'),
+	(26, 2200.00, 'transfer', 'successful', '2026-09-26 17:26:00'),
+	(28, 5400.00, 'card', 'failed', NULL),
+	(28, 5400.00, 'cash', 'successful', '2026-09-28 12:43:00'),
+	(29, 3250.00, 'cash', 'successful', '2026-09-29 17:20:00'),
+	(30, 2950.00, 'transfer', 'successful', '2026-09-30 07:22:00'),
+	(31, 1050.00, 'transfer', 'successful', '2026-10-01 12:18:00'),
+	(32, 2700.00, 'card', 'successful', '2026-10-02 17:44:00'),
+	(34, 2150.00, 'card', 'successful', '2026-10-04 12:09:00'),
+	(35, 3350.00, 'card', 'failed', NULL),
+	(35, 3350.00, 'cash', 'successful', '2026-10-05 17:37:00'),
+	(39, 3950.00, 'wallet', 'pending', NULL),
+	(40, 1800.00, 'wallet', 'pending', NULL);
+   
+SELECT *
+FROM payments;
