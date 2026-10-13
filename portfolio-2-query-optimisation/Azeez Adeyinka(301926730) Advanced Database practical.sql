@@ -526,3 +526,12 @@ WHERE trips.status = 'completed'
 GROUP BY customers.customer_id, customers.full_name
 HAVING COUNT(*) > 1
 ORDER BY completed_trips DESC;
+
+
+-- QUESTION 8: average trip duration in minutes, per trip type
+SELECT trip_type,
+       AVG(TIMESTAMPDIFF(MINUTE, started_at, completed_at)) AS avg_minutes
+FROM trips
+WHERE status = 'completed'
+GROUP BY trip_type;
+
