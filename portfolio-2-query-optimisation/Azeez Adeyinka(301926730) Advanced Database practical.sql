@@ -75,3 +75,40 @@ INSERT INTO drivers (driver_id, full_name, phone_number, license_number, status,
    
 SELECT *
 FROM drivers;
+
+
+CREATE TABLE vehicles (
+    vehicle_id   INT AUTO_INCREMENT PRIMARY KEY,
+    driver_id    INT NOT NULL,
+    plate_number VARCHAR(15) NOT NULL UNIQUE,
+    vehicle_type ENUM('bike', 'car', 'van') NOT NULL,
+    capacity_kg  DECIMAL(7,2) NOT NULL,
+    CONSTRAINT foreignKey_vehicle_driver FOREIGN KEY (driver_id) REFERENCES drivers(driver_id),
+    CONSTRAINT check_capacity CHECK (capacity_kg > 0)
+);
+
+INSERT INTO vehicles (vehicle_id, driver_id, plate_number, vehicle_type, capacity_kg) 
+	VALUES
+	(1, 1, 'LAG-101-BB', 'car', 300.00),
+	(2, 2, 'LAG-102-CC', 'car', 300.00),
+	(3, 3, 'LAG-103-DD', 'car', 300.00),
+	(4, 4, 'LAG-104-EE', 'car', 300.00),
+	(5, 5, 'LAG-105-AA', 'car', 300.00),
+	(6, 6, 'LAG-106-BB', 'car', 300.00),
+	(7, 7, 'LAG-107-CC', 'car', 300.00),
+	(8, 8, 'LAG-108-DD', 'car', 300.00),
+	(9, 9, 'LAG-109-EE', 'car', 300.00),
+	(10, 10, 'LAG-110-AA', 'car', 300.00),
+	(11, 11, 'LAG-111-BB', 'bike', 25.00),
+	(12, 12, 'LAG-112-CC', 'bike', 25.00),
+	(13, 13, 'LAG-113-DD', 'bike', 25.00),
+	(14, 14, 'LAG-114-EE', 'bike', 25.00),
+	(15, 15, 'LAG-115-AA', 'bike', 25.00),
+	(16, 16, 'LAG-116-BB', 'van', 1200.00),
+	(17, 17, 'LAG-117-CC', 'van', 1200.00),
+	(18, 18, 'LAG-118-DD', 'van', 1200.00),
+	(19, 19, 'LAG-119-EE', 'van', 1200.00),
+	(20, 20, 'LAG-120-AA', 'van', 1200.00);
+    
+SELECT *
+FROM vehicles;
