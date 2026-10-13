@@ -501,3 +501,11 @@ ORDER BY rating DESC;
 SELECT trip_type, COUNT(*) AS total_trips
 FROM trips
 GROUP BY trip_type;
+
+-- QUESTION 5: total earnings per driver (completed trips only), highest first
+SELECT drivers.driver_id, drivers.full_name, SUM(trips.fare_amount) AS total_earnings
+FROM drivers
+JOIN trips ON trips.driver_id = drivers.driver_id
+WHERE trips.status = 'completed'
+GROUP BY drivers.driver_id, drivers.full_name
+ORDER BY total_earnings DESC;
