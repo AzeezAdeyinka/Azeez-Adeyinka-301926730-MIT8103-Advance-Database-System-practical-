@@ -496,3 +496,8 @@ SELECT driver_id, full_name, rating
 FROM drivers
 WHERE rating > 4.5
 ORDER BY rating DESC;
+
+-- QUESTION 4: number of trips of each type
+SELECT trip_type, COUNT(*) AS total_trips
+FROM trips
+GROUP BY trip_type;
