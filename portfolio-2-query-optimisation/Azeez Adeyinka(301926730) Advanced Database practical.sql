@@ -535,3 +535,11 @@ FROM trips
 WHERE status = 'completed'
 GROUP BY trip_type;
 
+
+-- QUESTION 9: completed trips with no successful payment
+SELECT trips.trip_id, trips.fare_amount, trips.completed_at
+FROM trips
+LEFT JOIN payments
+       ON payments.trip_id = trips.trip_id AND payments.status = 'successful'
+WHERE trips.status = 'completed'
+  AND payments.payment_id IS NULL;
