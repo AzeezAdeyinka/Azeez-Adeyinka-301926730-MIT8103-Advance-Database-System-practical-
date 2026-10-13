@@ -149,3 +149,74 @@ INSERT INTO locations (location_id, address, area, latitude, longitude)
    
 SELECT *
 FROM locations;
+
+
+CREATE TABLE trips (
+    trip_id             INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id         INT NOT NULL,
+    driver_id           INT NULL,
+    vehicle_id          INT NULL,
+    trip_type           ENUM('ride', 'delivery') NOT NULL,
+    pickup_location_id  INT NOT NULL,
+    dropoff_location_id INT NOT NULL,
+    status              ENUM('requested', 'accepted', 'in_progress', 'completed', 'cancelled')
+                        NOT NULL DEFAULT 'requested',
+    requested_at        DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    started_at          DATETIME NULL,
+    completed_at        DATETIME NULL,
+    distance_km         DECIMAL(6,2) NULL,
+    fare_amount         DECIMAL(10,2) NULL,
+    CONSTRAINT foreignKey_trip_customer FOREIGN KEY (customer_id)         REFERENCES customers(customer_id),
+    CONSTRAINT foreignKey_trip_driver   FOREIGN KEY (driver_id)           REFERENCES drivers(driver_id),
+    CONSTRAINT foreignKey_trip_vehicle  FOREIGN KEY (vehicle_id)          REFERENCES vehicles(vehicle_id),
+    CONSTRAINT foreignKey_trip_pickup   FOREIGN KEY (pickup_location_id)  REFERENCES locations(location_id),
+    CONSTRAINT foreignKey_trip_dropoff  FOREIGN KEY (dropoff_location_id) REFERENCES locations(location_id),
+    CONSTRAINT check_trip_locations CHECK (pickup_location_id <> dropoff_location_id),
+    CONSTRAINT check_trip_fare      CHECK (fare_amount IS NULL OR fare_amount >= 0)
+);
+
+INSERT INTO trips (trip_id, customer_id, driver_id, vehicle_id, trip_type, pickup_location_id, dropoff_location_id, status, requested_at, started_at, completed_at, distance_km, fare_amount) 
+	VALUES
+	(1, 4, 1, 1, 'ride', 8, 17, 'completed', '2026-09-01 11:13:00', '2026-09-01 11:27:00', '2026-09-01 11:51:00', 6.81, 1450.00),
+	(2, 7, 11, 11, 'delivery', 15, 8, 'completed', '2026-09-02 16:26:00', '2026-09-02 16:38:00', '2026-09-02 17:38:00', 22.89, 4000.00),
+	(3, 10, 2, 2, 'ride', 2, 19, 'completed', '2026-09-03 06:39:00', '2026-09-03 06:46:00', '2026-09-03 07:02:00', 3.08, 950.00),
+	(4, 13, 12, 12, 'delivery', 9, 10, 'completed', '2026-09-04 11:52:00', '2026-09-04 12:05:00', '2026-09-04 12:53:00', 17.39, 3250.00),
+	(5, 16, 3, 3, 'ride', 16, 1, 'completed', '2026-09-05 16:05:00', '2026-09-05 16:16:00', '2026-09-05 17:41:00', 34.36, 5300.00),
+	(6, 19, 13, 13, 'delivery', 3, 12, 'completed', '2026-09-06 06:18:00', '2026-09-06 06:32:00', '2026-09-06 06:54:00', 5.87, 1600.00),
+	(7, 2, 4, 4, 'ride', 10, 3, 'completed', '2026-09-07 11:31:00', '2026-09-07 11:42:00', '2026-09-07 12:20:00', 12.89, 2300.00),
+	(8, 5, 14, 14, 'delivery', 17, 14, 'completed', '2026-09-08 16:44:00', '2026-09-08 16:59:00', '2026-09-08 17:21:00', 5.90, 1650.00),
+	(9, 8, 5, 5, 'ride', 4, 5, 'completed', '2026-09-09 06:57:00', '2026-09-09 07:12:00', '2026-09-09 08:25:00', 28.68, 4500.00),
+	(10, 11, NULL, NULL, 'delivery', 11, 16, 'cancelled', '2026-09-10 11:10:00', NULL, NULL, NULL, NULL),
+	(11, 14, 6, 6, 'ride', 18, 7, 'completed', '2026-09-11 16:23:00', '2026-09-11 16:36:00', '2026-09-11 17:57:00', 32.64, 5050.00),
+	(12, 17, 16, 16, 'delivery', 5, 18, 'completed', '2026-09-12 06:36:00', '2026-09-12 06:50:00', '2026-09-12 08:04:00', 29.18, 4900.00),
+	(13, 20, 7, 7, 'ride', 12, 9, 'completed', '2026-09-13 11:49:00', '2026-09-13 11:58:00', '2026-09-13 12:24:00', 7.56, 1550.00),
+	(14, 3, 17, 17, 'delivery', 19, 20, 'completed', '2026-09-14 16:02:00', '2026-09-14 16:16:00', '2026-09-14 17:22:00', 25.86, 4400.00),
+	(15, 6, 8, 8, 'ride', 6, 11, 'completed', '2026-09-15 06:15:00', '2026-09-15 06:29:00', '2026-09-15 07:41:00', 28.59, 4500.00),
+	(16, 9, 18, 18, 'delivery', 13, 2, 'completed', '2026-09-16 11:28:00', '2026-09-16 11:38:00', '2026-09-16 12:08:00', 9.48, 2150.00),
+	(17, 12, 9, 9, 'ride', 20, 13, 'completed', '2026-09-17 16:41:00', '2026-09-17 16:52:00', '2026-09-17 18:13:00', 32.66, 5050.00),
+	(18, 15, 19, 19, 'delivery', 7, 4, 'completed', '2026-09-18 06:54:00', '2026-09-18 07:07:00', '2026-09-18 07:56:00', 17.93, 3300.00),
+	(19, 18, 10, 10, 'ride', 14, 15, 'completed', '2026-09-19 11:07:00', '2026-09-19 11:14:00', '2026-09-19 11:52:00', 13.13, 2350.00),
+	(20, 1, 20, 20, 'delivery', 1, 6, 'cancelled', '2026-09-20 16:20:00', NULL, NULL, NULL, NULL),
+	(21, 4, 1, 1, 'ride', 8, 17, 'completed', '2026-09-21 06:33:00', '2026-09-21 06:46:00', '2026-09-21 08:01:00', 29.96, 4700.00),
+	(22, 7, 11, 11, 'delivery', 15, 8, 'completed', '2026-09-22 11:46:00', '2026-09-22 11:55:00', '2026-09-22 12:37:00', 14.84, 2900.00),
+	(23, 10, 2, 2, 'ride', 2, 19, 'completed', '2026-09-23 16:59:00', '2026-09-23 17:14:00', '2026-09-23 17:30:00', 3.01, 900.00),
+	(24, 13, 12, 12, 'delivery', 9, 10, 'completed', '2026-09-24 06:12:00', '2026-09-24 06:18:00', '2026-09-24 06:43:00', 6.87, 1750.00),
+	(25, 16, 3, 3, 'ride', 16, 1, 'completed', '2026-09-25 11:25:00', '2026-09-25 11:40:00', '2026-09-25 11:56:00', 3.16, 950.00),
+	(26, 19, 13, 13, 'delivery', 3, 12, 'completed', '2026-09-26 16:38:00', '2026-09-26 16:53:00', '2026-09-26 17:25:00', 10.13, 2200.00),
+	(27, 2, 4, 4, 'ride', 10, 3, 'cancelled', '2026-09-27 06:51:00', NULL, NULL, NULL, NULL),
+	(28, 5, 14, 14, 'delivery', 17, 14, 'completed', '2026-09-28 11:04:00', '2026-09-28 11:19:00', '2026-09-28 12:41:00', 32.92, 5400.00),
+	(29, 8, 5, 5, 'ride', 4, 5, 'completed', '2026-09-29 16:17:00', '2026-09-29 16:26:00', '2026-09-29 17:19:00', 19.64, 3250.00),
+	(30, 11, 15, 15, 'delivery', 11, 16, 'completed', '2026-09-30 06:30:00', '2026-09-30 06:37:00', '2026-09-30 07:21:00', 15.46, 2950.00),
+	(31, 14, 6, 6, 'ride', 18, 7, 'completed', '2026-10-01 11:43:00', '2026-10-01 11:56:00', '2026-10-01 12:14:00', 3.82, 1050.00),
+	(32, 17, 16, 16, 'delivery', 5, 18, 'completed', '2026-10-02 16:56:00', '2026-10-02 17:03:00', '2026-10-02 17:42:00', 13.43, 2700.00),
+	(33, 20, NULL, NULL, 'ride', 12, 9, 'cancelled', '2026-10-03 06:09:00', NULL, NULL, NULL, NULL),
+	(34, 3, 17, 17, 'delivery', 19, 20, 'completed', '2026-10-04 11:22:00', '2026-10-04 11:37:00', '2026-10-04 12:08:00', 9.62, 2150.00),
+	(35, 6, 8, 8, 'ride', 6, 11, 'completed', '2026-10-05 16:35:00', '2026-10-05 16:41:00', '2026-10-05 17:36:00', 20.52, 3350.00),
+	(36, 9, NULL, NULL, 'delivery', 13, 2, 'requested', '2026-10-13 06:12:00', NULL, NULL, NULL, NULL),
+	(37, 12, NULL, NULL, 'ride', 20, 13, 'requested', '2026-10-13 07:19:00', NULL, NULL, NULL, NULL),
+	(38, 15, 11, 11, 'delivery', 7, 4, 'accepted', '2026-10-13 08:26:00', NULL, NULL, NULL, NULL),
+	(39, 18, 1, 1, 'ride', 14, 15, 'in_progress', '2026-10-13 09:33:00', '2026-10-13 09:45:00', NULL, NULL, NULL),
+	(40, 1, 12, 12, 'delivery', 1, 6, 'in_progress', '2026-10-13 10:40:00', '2026-10-13 10:52:00', NULL, NULL, NULL);
+   
+SELECT *
+FROM trips;v
