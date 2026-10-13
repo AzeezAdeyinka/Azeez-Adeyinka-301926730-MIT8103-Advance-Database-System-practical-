@@ -490,3 +490,9 @@ FROM customers;
 SELECT * 
 FROM trips
 WHERE status = 'completed';
+
+-- QUESTION 3: drivers rated above 4.5, highest first
+SELECT driver_id, full_name, rating
+FROM drivers
+WHERE rating > 4.5
+ORDER BY rating DESC;
