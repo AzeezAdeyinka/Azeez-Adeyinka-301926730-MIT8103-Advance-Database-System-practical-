@@ -112,3 +112,40 @@ INSERT INTO vehicles (vehicle_id, driver_id, plate_number, vehicle_type, capacit
     
 SELECT *
 FROM vehicles;
+
+
+CREATE TABLE locations (
+    location_id INT AUTO_INCREMENT PRIMARY KEY,
+    address     VARCHAR(150) NOT NULL,
+    area        VARCHAR(50) NOT NULL,
+    latitude    DECIMAL(9,6) NOT NULL,
+    longitude   DECIMAL(9,6) NOT NULL,
+    CONSTRAINT check_latitude  CHECK (latitude  BETWEEN -90 AND 90),
+    CONSTRAINT check_longitude CHECK (longitude BETWEEN -180 AND 180)
+);
+
+INSERT INTO locations (location_id, address, area, latitude, longitude) 
+	VALUES
+	(1, 'Obafemi Awolowo Way', 'Ikeja', 6.601800, 3.351500),
+	(2, 'Admiralty Way', 'Lekki', 6.447400, 3.472300),
+	(3, 'Adeola Odeku Street', 'Victoria Island', 6.428000, 3.421000),
+	(4, 'Herbert Macaulay Way', 'Yaba', 6.517000, 3.384000),
+	(5, 'Adeniran Ogunsanya Street', 'Surulere', 6.500000, 3.358000),
+	(6, 'Lekki-Epe Expressway', 'Ajah', 6.466000, 3.568000),
+	(7, 'Awolowo Road', 'Ikoyi', 6.452000, 3.435000),
+	(8, 'Allen Avenue', 'Ikeja', 6.613000, 3.358000),
+	(9, 'Ikorodu Road', 'Maryland', 6.572000, 3.366000),
+	(10, 'Broad Street', 'Lagos Island', 6.453000, 3.390000),
+	(11, 'Opebi Road', 'Ikeja', 6.595000, 3.355000),
+	(12, 'Isaac John Street', 'GRA Ikeja', 6.588000, 3.350000),
+	(13, 'Mobolaji Bank Anthony Way', 'Ikeja', 6.580000, 3.360000),
+	(14, 'Ozumba Mbadiwe Avenue', 'Victoria Island', 6.430000, 3.420000),
+	(15, 'Badagry Expressway', 'Festac', 6.465000, 3.283000),
+	(16, 'Apapa Road', 'Apapa', 6.448000, 3.359000),
+	(17, 'Egbeda Road', 'Egbeda', 6.587000, 3.290000),
+	(18, 'Agege Motor Road', 'Mushin', 6.535000, 3.350000),
+	(19, 'Chevron Drive', 'Lekki', 6.440000, 3.500000),
+	(20, 'Bode Thomas Street', 'Surulere', 6.496000, 3.360000);
+   
+SELECT *
+FROM locations;
