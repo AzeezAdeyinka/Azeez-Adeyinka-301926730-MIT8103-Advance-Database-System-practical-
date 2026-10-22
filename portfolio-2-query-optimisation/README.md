@@ -55,10 +55,10 @@ Measured with `EXPLAIN` and `EXPLAIN ANALYZE`. "Before" has only the primary and
 | Query | Before: plan | Before: rows | Before: time | After: plan | After: rows | After: time |
 |---|---|---|---|---|---|---|
 | P1 | Table scan (ALL) | 7,774 | 6.69 ms | Index lookup | 724 | 2.43 ms |
-| P2 | Table scan (ALL) | 7,774 | [ADD] | Covering index range scan | 1,126 | 1.42 ms |
-| P3 | Full foreign key index read | 7,774 | [ADD] | Covering index lookup | 2,943 | 2.81 ms |
-| P4 | Table scan + filesort | 7,774 | [ADD] | Reverse index scan, no sort | 70 | 0.44 ms |
-| P5 | Table scan (ALL) | 7,505 | [ADD] | Index lookup | 124 | 0.42 ms |
+| P2 | Table scan (ALL) | 7,774 | 4.23 ms | Covering index range scan | 1,126 | 1.42 ms |
+| P3 | Full foreign key index read | 7,774 |7.19 ms | Covering index lookup | 2,943 | 2.81 ms |
+| P4 | Table scan + filesort | 7,774 | 2.68 ms | Reverse index scan, no sort | 70 | 0.44 ms |
+| P5 | Table scan (ALL) | 7,505 | 2.39 ms | Index lookup | 124 | 0.42 ms |
 
 ## 6. Performance Analysis
 
