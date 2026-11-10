@@ -56,13 +56,13 @@ advanced-database-portfolio/
 └── README.md                               this file
 ```
 
-| Portfolio | Marks | Key result |
+| Portfolio | Key result |
 |---|---|---|
-| 1. Database Design and Modelling | 7 | Eight-table MySQL schema in third normal form, with constraints tested by valid and invalid inserts |
-| 2. Query Processing and Optimisation | 7 | Four indexes cut the rows read by each performance query from about 7,500 to 7,800 down to between 70 and 2,943 |
-| 3. Transactions and Concurrency | 7 | Commit, rollback, two isolation levels, a double-booking race condition, and a `FOR UPDATE` fix |
-| 4. NoSQL and Advanced Data Models | 7 | Eight MongoDB collections matching MySQL; an index cut documents examined from 8,000 to 724 |
-| 5. Distributed and Cloud Database | 6 | Three-node Atlas replica set, write concern and read preference tests, and a documented sharding design |
+| 1. Database Design and Modelling | Eight-table MySQL schema in third normal form, with constraints tested by valid and invalid inserts |
+| 2. Query Processing and Optimisation | Four indexes cut the rows read by each performance query from about 7,500 to 7,800 down to between 70 and 2,943 |
+| 3. Transactions and Concurrency | Commit, rollback, two isolation levels, a double-booking race condition, and a `FOR UPDATE` fix |
+| 4. NoSQL and Advanced Data Models | Eight MongoDB collections matching MySQL; an index cut documents examined from 8,000 to 724 |
+| 5. Distributed and Cloud Database | Three-node Atlas replica set, write concern and read preference tests, and a documented sharding design |
 
 ---
 
