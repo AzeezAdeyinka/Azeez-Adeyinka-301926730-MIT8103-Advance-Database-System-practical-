@@ -8,6 +8,7 @@
 **StudentID** 301926730
 **Student email** a.azeez6730@miva.edu.ng
 **Organisation** Insightmove
+**GitHub repository**: https://github.com/AzeezAdeyinka/Azeez-Adeyinka-301926730-MIT8103-Advance-Database-System-practical-
 
 ## Contents
 
